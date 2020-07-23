@@ -1,21 +1,28 @@
 package com.example.handler;
 
+import android.content.Context;
 import android.os.Bundle;
-import android.widget.Toast;
+import android.os.Message;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.example.handler.MyHandler.ANDROID;
+import static com.example.handler.MyHandler.JAVA;
+
 public class HandlerActivity extends AppCompatActivity {
 
     private MyHandlerThread myHandlerThread;
+    private static Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_handler);
+
+        context = getBaseContext();
 
         ButterKnife.bind(this);
         myHandlerThread = new MyHandlerThread();
@@ -24,23 +31,21 @@ public class HandlerActivity extends AppCompatActivity {
 
     @OnClick(R.id.button_android)
     void setAndroid() {
-        myHandlerThread.handler.post(new Runnable() {
-            @Override
-            public void run() {
-                Toast.makeText(HandlerActivity.this, "android", Toast.LENGTH_SHORT).show();
-            }
-        });
+        sendMessageToHandler(ANDROID);
     }
 
     @OnClick(R.id.button_java)
     void setJava() {
-        myHandlerThread.handler.post(new Runnable() {
-            @Override
-            public void run() {
-                Toast.makeText(HandlerActivity.this, "java", Toast.LENGTH_SHORT).show();
-            }
-        });
-
+        sendMessageToHandler(JAVA);
     }
 
+    private void sendMessageToHandler(int value){
+        Message message = new Message();
+        message.what = value;
+        myHandlerThread.handler.sendMessage(message);
+    }
+
+    public static Context getContext(){
+        return context;
+    }
 }

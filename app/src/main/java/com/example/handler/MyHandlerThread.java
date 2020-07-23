@@ -10,7 +10,7 @@ public class MyHandlerThread extends Thread {
     @Override
     public void run() {
         Looper.prepare();
-        handler = new Handler();
+        handler = new MyHandler();
         Looper.loop();
     }
 }
