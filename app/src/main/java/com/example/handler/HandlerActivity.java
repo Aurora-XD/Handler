@@ -39,13 +39,19 @@ public class HandlerActivity extends AppCompatActivity {
         sendMessageToHandler(JAVA);
     }
 
-    private void sendMessageToHandler(int value){
+    private void sendMessageToHandler(int value) {
         Message message = new Message();
         message.what = value;
         myHandlerThread.handler.sendMessage(message);
     }
 
-    public static Context getContext(){
+    public static Context getContext() {
         return context;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        myHandlerThread.handler.removeCallbacksAndMessages(null);
     }
 }
