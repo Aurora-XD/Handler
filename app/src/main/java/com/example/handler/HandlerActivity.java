@@ -22,7 +22,7 @@ public class HandlerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_handler);
 
-        context = getBaseContext();
+        context = getApplicationContext();
 
         ButterKnife.bind(this);
         myHandlerThread = new MyHandlerThread();
